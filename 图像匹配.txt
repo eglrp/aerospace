@@ -1,0 +1,58 @@
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/nonfree/nonfree.hpp>  
+#include <opencv2/legacy/legacy.hpp>  
+#include <iostream>  
+
+using namespace cv;
+using namespace std;
+
+//直接调用此函数
+//srcImage1为左，srcImage2为右，paraHessian可直接选择1000-5000的数，keyPoints_min_xiaotu为左图中对应的匹配，keyPoints_min_datu为右图中对应的特征点
+
+
+void cacSIFTFeatureAndCompare1(cv::Mat srcImage1, cv::Mat srcImage2, float paraHessian, vector<Point2f> &keyPoints_min_xiaotu, vector<Point2f> &keyPoints_min_datu)
+{
+	CV_Assert(srcImage1.data != NULL && srcImage2.data != NULL);
+	Mat grayMat1, grayMat2;
+	cvtColor(srcImage1, grayMat1, CV_RGB2GRAY);
+	cvtColor(srcImage2, grayMat2, CV_RGB2GRAY);
+	SurfFeatureDetector surfDetector(paraHessian);
+	SurfDescriptorExtractor surfExtractor;
+	vector<KeyPoint> keyPoints1, keyPoints2;
+	Mat descriptorMat1, descriptorMat2;
+	surfDetector.detect(grayMat1, keyPoints1);
+	surfDetector.detect(grayMat2, keyPoints2);
+	surfExtractor.compute(grayMat1, keyPoints1, descriptorMat1);
+	surfExtractor.compute(grayMat2, keyPoints2, descriptorMat2);
+	if (keyPoints1.size() > 0 && keyPoints2.size() > 0)
+	{
+		cv::FlannBasedMatcher matcher;
+		vector< cv::DMatch > matches;
+		std::vector<cv::DMatch> viewMatches;
+		matcher.match(descriptorMat1, descriptorMat2, matches);
+		//最优匹配判断  
+		double minDist = 100;
+		for (int i = 0; i < matches.size(); i++)
+		{
+			if (matches[i].distance < minDist)
+				minDist = matches[i].distance;
+		}
+		for (int i = 0; i < matches.size(); i++)
+		{
+			if (matches[i].distance <= 2 * minDist)
+			{
+				viewMatches.push_back(matches[i]);
+				keyPoints_min_xiaotu.push_back(keyPoints1[matches[i].queryIdx].pt);
+				keyPoints_min_datu.push_back(keyPoints2[matches[i].trainIdx].pt);
+			}
+		}
+
+		Mat matchMat;
+		drawMatches(srcImage1, keyPoints1, srcImage2, keyPoints2, viewMatches, matchMat);
+		imshow("matchMat", matchMat);
+		waitKey();
+	}
+
+	
+}
