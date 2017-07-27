@@ -1,0 +1,45 @@
+项目三：
+opencv中根据svm来做数字识别：
+1. opencv 里面svm做数字分类，手写数字识别： http://blog.csdn.net/firefight/article/details/6452188
+
+2. 基于SVM的手写数字识别，别人做好的，可以直接试试： http://download.csdn.net/download/haqazf/8280981
+  Ubuntu下，手写数字识别： http://blog.csdn.net/laihonghuan/article/details/49387237
+  手写数字识别： http://lib.csdn.net/article/opencv/24492
+
+3. SVM训练分类器的过程： http://blog.csdn.net/maweifei/article/details/60152242
+（是基于mnist库，输入数据格式和我们的不一样，我们还要参考别的教程，怎么直接根据图像来训练svm分类器）
+  不是针对数字识别，但是包含了详尽的svm训练以及测试全过程：http://blog.csdn.net/chaipp0607/article/details/68067098
+
+  多分类器的训练以及测试：http://blog.csdn.net/kekong0713/article/details/52692965
+  参考：二分类： http://lib.csdn.net/article/machinelearning/39577
+
+
+4. opencv印刷数字识别： http://www.cnblogs.com/farewell-farewell/p/5887068.html
+
+5. 做好的数字识别，可以直接试试： http://download.csdn.net/download/u011613729/8910369
+（针对opencv入门的同学，本程序使用模板匹配的方法，实现了图片中数字的自动识别，包括有划痕和有噪点的图片识别。）
+
+
+
+
+项目四：
+opencv中识别二维码：
+1. 关于二维码的识别与定位 http://blog.csdn.net/cjj1130320082/article/details/52027214
+
+2. 二维码定位2 http://blog.csdn.net/chaipp0607/article/details/54919766
+（轮廓查找，如果轮廓满足一下条件，认为可能为二维码区域，像素面积大于60，长短轴之比小于1.3 ）
+
+3. 根据findcountors函数进行二维码定位 http://www.cnblogs.com/jsxyhelu/p/6579412.html
+（对于它的3个定位点，认为构造了相互包含的轮廓区域，这种特性，在图上只有三处，而且在自然图片中是不容易重复的）
+
+4. 二维码矫正 http://blog.csdn.net/dcrmg/article/details/52195999
+
+5. 对于二维码的定位讲解很详细： http://www.cocoachina.com/ios/20160623/16812.html
+
+6. 二维码定位识别，别人做好的例子：
+
+http://download.csdn.net/download/meiqua/9603854
+https://github.com/zhaowenyi94/QRcode/blob/master/ConsoleApplication1.sln
+http://download.csdn.net/download/meiqua/9606176
+
+
